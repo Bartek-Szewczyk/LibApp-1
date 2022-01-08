@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\studia-projekty\\asp.net-fork-libApp\\LibApp-1\\LibApp.csproj": {}
+    "C:\\Users\\Marcin\\Desktop\\GIT\\LibApp_Gr5\\LibApp\\LibApp.csproj": {}
   },
   "projects": {
-    "D:\\studia-projekty\\asp.net-fork-libApp\\LibApp-1\\LibApp.csproj": {
+    "C:\\Users\\Marcin\\Desktop\\GIT\\LibApp_Gr5\\LibApp\\LibApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\studia-projekty\\asp.net-fork-libApp\\LibApp-1\\LibApp.csproj",
+        "projectUniqueName": "C:\\Users\\Marcin\\Desktop\\GIT\\LibApp_Gr5\\LibApp\\LibApp.csproj",
         "projectName": "LibApp",
-        "projectPath": "D:\\studia-projekty\\asp.net-fork-libApp\\LibApp-1\\LibApp.csproj",
-        "packagesPath": "C:\\Users\\48601\\.nuget\\packages\\",
-        "outputPath": "D:\\studia-projekty\\asp.net-fork-libApp\\LibApp-1\\obj\\",
+        "projectPath": "C:\\Users\\Marcin\\Desktop\\GIT\\LibApp_Gr5\\LibApp\\LibApp.csproj",
+        "packagesPath": "C:\\Users\\Marcin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Marcin\\Desktop\\GIT\\LibApp_Gr5\\LibApp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet"
-        ],
         "configFilePaths": [
-          "C:\\Users\\48601\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Marcin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -48,6 +44,10 @@
               "target": "Package",
               "version": "[8.1.1, )"
             },
+            "Bootbox.JS": {
+              "target": "Package",
+              "version": "[5.5.2, )"
+            },
             "Microsoft.AspNet.WebApi.Core": {
               "target": "Package",
               "version": "[5.2.7, )"
@@ -75,6 +75,10 @@
             "Microsoft.EntityFrameworkCore.Tools": {
               "target": "Package",
               "version": "[5.0.9, )"
+            },
+            "jquery.datatables": {
+              "target": "Package",
+              "version": "[1.10.15, )"
             }
           },
           "imports": [
@@ -87,6 +91,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.13, 5.0.13]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -95,7 +105,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.404\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
