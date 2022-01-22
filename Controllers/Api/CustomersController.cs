@@ -31,26 +31,35 @@ namespace LibApp.Controllers.Api
 
         // GET /api/customers
         [HttpGet]
-        public IActionResult GetCustomers()
+        public IActionResult GetCustomers(string query = null)
         {
-            var customers = _context.Customers
-                                        .Include(c => c.MembershipType)
-                                        .ToList()
-                                        .Select(_mapper.Map<Customer, CustomerDto>);
-            return Ok(customers);
+            IEnumerable<Customer> customersQuery = _context.Customers
+                                        .Include(c => c.MembershipType);
+
+            if (!String.IsNullOrWhiteSpace(query))
+            {
+                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
+            }
+
+            var customerDtos = customersQuery.ToList().Select(_mapper.Map<Customer, CustomerDto>);
+            return Ok(customerDtos);
         }
 
         // GET /api/customers/{id}
         [HttpGet("{id}")]
-        public CustomerDto GetCustomer(int id)
+        public async Task<IActionResult> GetCustomer(int id)
         {
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            Console.WriteLine("Request START");
+            var customer = await _context.Customers.SingleOrDefaultAsync(c => c.Id == id);
+            await Task.Delay(2000);
+
             if (customer == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            return _mapper.Map<CustomerDto>(customer);
+            Console.WriteLine("Request END");
+            return Ok(_mapper.Map<CustomerDto>(customer));
         }
 
         // POST /api/customers
