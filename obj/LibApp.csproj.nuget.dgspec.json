@@ -80,9 +80,21 @@
               "target": "Package",
               "version": "[5.0.9, )"
             },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
             "jquery.datatables": {
               "target": "Package",
               "version": "[1.10.15, )"
+            },
+            "toastr": {
+              "target": "Package",
+              "version": "[2.1.1, )"
+            },
+            "twitter.typeahead": {
+              "target": "Package",
+              "version": "[0.11.1, )"
             }
           },
           "imports": [

@@ -2521,6 +2521,18 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "toastr/2.1.1": {
+        "type": "package",
+        "dependencies": {
+          "jQuery": "1.6.3"
+        }
+      },
+      "Twitter.Typeahead/0.11.1": {
+        "type": "package",
+        "dependencies": {
+          "jQuery": "1.10.2"
+        }
       }
     }
   },
@@ -8661,6 +8673,40 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "toastr/2.1.1": {
+      "sha512": "h/688XvzYk1xVYn213ryU+HCElE4n/drYzAHJkAi9LsSUPS3EbI6wGlvCglBUt7i4h5iESgAVarYaigjQmVpqg==",
+      "type": "package",
+      "path": "toastr/2.1.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/content/toastr.css",
+        "content/content/toastr.less",
+        "content/content/toastr.min.css",
+        "content/content/toastr.scss",
+        "content/scripts/toastr.js",
+        "content/scripts/toastr.min.js",
+        "toastr.2.1.1.nupkg.sha512",
+        "toastr.nuspec"
+      ]
+    },
+    "Twitter.Typeahead/0.11.1": {
+      "sha512": "rvLNWhljNZDvl/zFAghW/KlE0bRUzndkhMLxCoGkxph2h/kilGIIhqIXklcBH9S/gYeHTQ0VBnyiMk+6gPhhGw==",
+      "type": "package",
+      "path": "twitter.typeahead/0.11.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/Scripts/bloodhound.js",
+        "content/Scripts/bloodhound.min.js",
+        "content/Scripts/typeahead.bundle.js",
+        "content/Scripts/typeahead.bundle.min.js",
+        "content/Scripts/typeahead.jquery.js",
+        "content/Scripts/typeahead.jquery.min.js",
+        "twitter.typeahead.0.11.1.nupkg.sha512",
+        "twitter.typeahead.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -8674,7 +8720,10 @@
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 5.0.9",
       "Microsoft.EntityFrameworkCore.SqlServer >= 5.0.9",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.9",
-      "jquery.datatables >= 1.10.15"
+      "Microsoft.Extensions.Caching.Memory >= 5.0.0",
+      "jquery.datatables >= 1.10.15",
+      "toastr >= 2.1.1",
+      "twitter.typeahead >= 0.11.1"
     ]
   },
   "packageFolders": {
@@ -8757,9 +8806,21 @@
             "target": "Package",
             "version": "[5.0.9, )"
           },
+          "Microsoft.Extensions.Caching.Memory": {
+            "target": "Package",
+            "version": "[5.0.0, )"
+          },
           "jquery.datatables": {
             "target": "Package",
             "version": "[1.10.15, )"
+          },
+          "toastr": {
+            "target": "Package",
+            "version": "[2.1.1, )"
+          },
+          "twitter.typeahead": {
+            "target": "Package",
+            "version": "[0.11.1, )"
           }
         },
         "imports": [
