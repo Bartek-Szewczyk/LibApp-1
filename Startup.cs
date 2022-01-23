@@ -69,8 +69,6 @@ namespace LibApp
                 endpoints.MapRazorPages();
             });
             
-            //Seed database
-            AppDbInitializer.Seed(app);
         }
     }
 }
