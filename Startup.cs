@@ -68,6 +68,9 @@ namespace LibApp
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+            
+            //Seed database
+            AppDbInitializer.Seed(app);
         }
     }
 }
