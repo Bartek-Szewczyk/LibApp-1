@@ -12,34 +12,32 @@ namespace LibApp.Controllers
 {
     public class BooksController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IBooksRepo _books;
+        private readonly IGenreRepo _genre;
 
-        public BooksController(ApplicationDbContext context)
+        public BooksController(IBooksRepo books, IGenreRepo genre)
         {
-            _context = context;
+            _books = books;
+            _genre = genre;
         }
 
         public IActionResult Index()
         {
-            var books = _context.Books
-                .Include(b => b.Genre)
-                .ToList();
+            var books = _books.GetAllBooks();
 
             return View(books);
         }
 
         public IActionResult Details(int id)
         {
-            var book = _context.Books
-                .Include(b => b.Genre)
-                .SingleOrDefault(b => b.Id == id);
+            var book = _books.GetBookById(id);
 
             return View(book);
         }
         
         public IActionResult Edit(int id)
         {
-            var book = _context.Books.SingleOrDefault(b => b.Id == id);
+            var book = _books.GetBookById(id);
             if (book == null) 
             {
                 return NotFound();
@@ -48,7 +46,7 @@ namespace LibApp.Controllers
             var viewModel = new BookFormViewModel
             {
                 Book = book,
-                Genres = _context.Genre.ToList()
+                Genres = _genre.GetAllGenres()
             };
 
             return View("BookForm", viewModel);
@@ -58,7 +56,7 @@ namespace LibApp.Controllers
         {
             var viewModel = new BookFormViewModel
             {
-                Genres = _context.Genre.ToList()
+                Genres = _genre.GetAllGenres()
             };
 
             return View("BookForm", viewModel);
@@ -70,11 +68,11 @@ namespace LibApp.Controllers
             if (book.Id == 0)
             {
                 book.DateAdded = DateTime.Now;
-                _context.Books.Add(book);
+                _books.AddBook(book);
             }
             else
             {
-                var bookInDb = _context.Books.Single(b => b.Id == book.Id);
+                var bookInDb = _books.GetBookById(book.Id);
                 bookInDb.Name = book.Name;
                 bookInDb.AuthorName = book.AuthorName;
                 bookInDb.GenreId = book.GenreId;
@@ -85,7 +83,7 @@ namespace LibApp.Controllers
 
             try
             {
-                _context.SaveChanges();
+                _books.Save();
             }
             catch (DbUpdateException e)
             {

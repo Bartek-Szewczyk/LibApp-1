@@ -5,6 +5,7 @@ using LibApp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,25 +16,36 @@ namespace LibApp.Controllers.Api
     [ApiController]
     public class BooksController : ControllerBase
     {
-        public BooksController(ApplicationDbContext context, IMapper mapper)
+        private readonly IBooksRepo _repository;
+        private readonly IMapper _mapper;
+        
+        public BooksController(IBooksRepo repository,  IMapper mapper)
         {
-            _context = context;
+            _repository = repository;
             _mapper = mapper;
         }
 
-        public IEnumerable<BookDto> GetBooks(string query = null)
+        //GET api/books
+        [HttpGet]
+        public ActionResult<IEnumerable<Book>> GetAllBooks()
         {
-            var booksQuery = _context.Books.Where(b => b.NumberAvailable > 0);
-
-            if (!String.IsNullOrWhiteSpace(query))
-            {
-                booksQuery = booksQuery.Where(b => b.Name.Contains(query));
-            }
-
-            return booksQuery.ToList().Select(_mapper.Map<Book, BookDto>);
+            var booksItems = _repository.GetAllBooks();
+            return Ok(_mapper.Map<IEnumerable<BookDto>>(booksItems));
         }
+        
+        //GET api/books/{id}
+        [HttpGet("{id}", Name = "GetBookById")]
+        public ActionResult<Book> GetBookById(int id)
+        {
+            var bookItem = _repository.GetBookById(id);
 
-        private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
+            if (bookItem == null)
+            {
+                return NotFound();
+            }
+            
+            return Ok(_mapper.Map<BookDto>(bookItem));
+        }
+        
     }
 }
