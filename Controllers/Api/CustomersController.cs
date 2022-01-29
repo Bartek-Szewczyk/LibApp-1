@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -23,9 +24,11 @@ namespace LibApp.Controllers.Api
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        public CustomersController(ApplicationDbContext context, IMapper mapper)
+        private readonly ICustomersRepo _customers;
+        private readonly IMapper _mapper;
+        public CustomersController(ICustomersRepo customers, IMapper mapper)
         {
-            _context = context;
+            _customers = customers;
             _mapper = mapper;
         }
 
@@ -33,16 +36,9 @@ namespace LibApp.Controllers.Api
         [HttpGet]
         public IActionResult GetCustomers(string query = null)
         {
-            IEnumerable<Customer> customersQuery = _context.Customers
-                                        .Include(c => c.MembershipType);
+            var customerItems = _customers.GetAllCustomers();
 
-            if (!String.IsNullOrWhiteSpace(query))
-            {
-                customersQuery = customersQuery.Where(c => c.Name.Contains(query));
-            }
-
-            var customerDtos = customersQuery.ToList().Select(_mapper.Map<Customer, CustomerDto>);
-            return Ok(customerDtos);
+            return Ok(_mapper.Map<IEnumerable<CustomerDto>>(customerItems));
         }
 
         // GET /api/customers/{id}
@@ -50,7 +46,7 @@ namespace LibApp.Controllers.Api
         public async Task<IActionResult> GetCustomer(int id)
         {
             Console.WriteLine("Request START");
-            var customer = await _context.Customers.SingleOrDefaultAsync(c => c.Id == id);
+            var customer = await _customers.GetAsyncCustomerById(id);
             await Task.Delay(2000);
 
             if (customer == null)
@@ -72,8 +68,8 @@ namespace LibApp.Controllers.Api
             }
 
             var customer = _mapper.Map<Customer>(customerDto);
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
+            _customers.AddCustomer(customer);
+            _customers.Save();
 
             customerDto.Id = customer.Id;
             return customerDto;
@@ -88,31 +84,29 @@ namespace LibApp.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
 
-            var customerInDb = _context.Customers.Single(c => c.Id == customerDto.Id);
+            var customerInDb = _customers.GetCustomerById(customerDto.Id);
             if (customerInDb == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
             _mapper.Map(customerDto, customerInDb);
-            _context.SaveChanges();
+            _customers.Save();
         }
 
         // DELETE /api/customers/{id}
         [HttpDelete("{id}")]
         public void DeleteCustomer(int id)
         {
-            var customerInDb = _context.Customers.Single(c => c.Id == id);
+            var customerInDb = _customers.GetCustomerById(id);
             if (customerInDb == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            _context.Customers.Remove(customerInDb);
-            _context.SaveChanges();
+            _customers.RemoveCustomer(customerInDb);
+            _customers.Save();
         }
-
-        private ApplicationDbContext _context;
-        private readonly IMapper _mapper;
+        
     }
 }

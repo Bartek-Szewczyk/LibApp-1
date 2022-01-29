@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using LibApp.Data;
 using LibApp.Models;
 using Microsoft.EntityFrameworkCore;
@@ -22,13 +23,24 @@ namespace LibApp.Profiles
 
         public Customer GetCustomerById(int id)
         {
+            return _context.Customers.Include(c => c.MembershipType)
+                .SingleOrDefault(c => c.Id == id);
+        }
+
+        public Task<Customer> GetAsyncCustomerById(int id)
+        {
            return _context.Customers.Include(c => c.MembershipType)
-               .SingleOrDefault(c => c.Id == id);
+               .SingleOrDefaultAsync(c => c.Id == id);
         }
 
         public EntityEntry<Customer> AddCustomer(Customer customer)
         {
             return _context.Customers.Add(customer);
+        }
+
+        public EntityEntry<Customer> RemoveCustomer(Customer customer)
+        {
+            return _context.Customers.Remove(customer);
         }
 
         public int Save()

@@ -1,4 +1,4 @@
-@model LibApp.Models.Customer
+@model Customer
 
 @{
     ViewBag.Title = Model.Name;
@@ -12,4 +12,5 @@
     {
         <li>Birthdate: @Model.Birthdate.Value.ToShortDateString()</li>
     }
+    <a class="btn btn-primary" style="color: white">Edit</a>
 </ul>
