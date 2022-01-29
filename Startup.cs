@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibApp.Profiles;
 
 namespace LibApp
 {
@@ -29,6 +30,8 @@ namespace LibApp
         {
             services.AddScoped<IBooksRepo, BooksRepo>();
             services.AddScoped<IGenreRepo, GenreRepo>();
+            services.AddScoped<ICustomersRepo, CustomersRepo>();
+            services.AddScoped<IMembershipTypesRepo, MembershipTypesRepo>();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
