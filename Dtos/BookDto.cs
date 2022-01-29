@@ -13,5 +13,6 @@ namespace LibApp.Dtos
         [Required]
         [StringLength(255)]
         public string Name { get; set; }
+        public Genre Genre { get; set; }
     }
 }

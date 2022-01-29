@@ -12,5 +12,5 @@
     {
         <li>Birthdate: @Model.Birthdate.Value.ToShortDateString()</li>
     }
-    <a class="btn btn-primary" style="color: white">Edit</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
 </ul>
