@@ -12,5 +12,8 @@
     {
         <li>Birthdate: @Model.Birthdate.Value.ToShortDateString()</li>
     }
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
 </ul>
+@if (User.IsInRole("Administrator"))
+{
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+}
