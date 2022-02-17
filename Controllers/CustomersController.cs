@@ -20,13 +20,13 @@ namespace LibApp.Controllers
             _customers = customers;
             _membershipTypes = membersipTypes;
         }
-
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Owner, StoreManager")]
         public ViewResult Index()
         {
             var customers = _customers.GetAllCustomers();
             return View(customers);
         }
-
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Owner, StoreManager")]
         public IActionResult Details(int id)
         {
             var customer = _customers.GetCustomerById(id);
@@ -49,7 +49,7 @@ namespace LibApp.Controllers
 
             return View("CustomerForm", viewModel);
         }
-
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Owner")]
         public IActionResult Edit(int id)
         {
             var customer = _customers.GetCustomerById(id);

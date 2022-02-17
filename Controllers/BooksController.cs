@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using LibApp.Models;
 using LibApp.ViewModels;
 using LibApp.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibApp.Controllers
@@ -21,20 +23,21 @@ namespace LibApp.Controllers
             _genre = genre;
         }
 
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Owner, User, StoreManager")]
         public IActionResult Index()
         {
             var books = _books.GetAllBooks();
 
             return View(books);
         }
-
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Owner, User, StoreManager")]
         public IActionResult Details(int id)
         {
             var book = _books.GetBookById(id);
 
             return View(book);
         }
-        
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Owner, User, StoreManager")]
         public IActionResult Edit(int id)
         {
             var book = _books.GetBookById(id);
@@ -62,7 +65,7 @@ namespace LibApp.Controllers
             return View("BookForm", viewModel);
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
         public IActionResult Save(Book book)
         {
             if (book.Id == 0)

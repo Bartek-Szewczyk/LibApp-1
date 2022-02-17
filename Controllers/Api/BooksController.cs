@@ -2,18 +2,17 @@
 using LibApp.Data;
 using LibApp.Dtos;
 using LibApp.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibApp.Controllers.Api
 {
-    [Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         private readonly IBooksRepo _repository;
@@ -27,6 +26,7 @@ namespace LibApp.Controllers.Api
 
         //GET api/books
         [HttpGet]
+        [Authorize(Roles = "Owner, StoreManager, User")]
         public ActionResult<IEnumerable<Book>> GetAllBooks()
         {
             var booksItems = _repository.GetAllBooks();
@@ -35,6 +35,7 @@ namespace LibApp.Controllers.Api
         
         //GET api/books/{id}
         [HttpGet("{id}", Name = "GetBookById")]
+        [Authorize(Roles = "Owner, StoreManager, User")]
         public ActionResult<Book> GetBookById(int id)
         {
             var bookItem = _repository.GetBookById(id);
