@@ -31,6 +31,11 @@ namespace LibApp.Data
             return _context.Books.Add(book);
         }
 
+        public EntityEntry<Book> RemoveBook(int id)
+        {
+            return _context.Books.Remove(GetBookById(id));
+        }
+
         public int Save()
         {
             return _context.SaveChanges();

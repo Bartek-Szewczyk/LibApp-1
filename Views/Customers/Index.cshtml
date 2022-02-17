@@ -26,7 +26,7 @@
     </table>
 
 
-@section Scripts 
+@section Scripts
 {
     <script>
         $(document).ready(function () {
@@ -82,7 +82,12 @@
                                 method: "DELETE",
                                 success: function () {
                                     table.row(button.parents("tr")).remove().draw();
-                                }
+                                },
+                                 error: function (request, status, error) {
+                                     bootbox.alert({
+                                     message: "Access denied",
+                                     })
+                                 }
                             });
                         }
                     }

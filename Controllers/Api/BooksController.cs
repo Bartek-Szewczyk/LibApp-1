@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LibApp.Controllers.Api
@@ -48,5 +50,22 @@ namespace LibApp.Controllers.Api
             return Ok(_mapper.Map<BookDto>(bookItem));
         }
         
+         // DELETE /api/book/{id}
+         [HttpDelete("{id}")]
+         [Authorize(Roles = "Owner")]
+         public ActionResult<Book> RemoveBook(int id)
+         {
+             try
+             {
+                 _repository.RemoveBook(id);
+                 return Ok();
+             }
+             catch (Exception e)
+             {
+                 Console.WriteLine(e);
+                 throw new HttpRequestException(e.Message,e,HttpStatusCode.BadRequest);
+             }
+             
+         }
     }
 }

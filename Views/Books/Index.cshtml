@@ -28,7 +28,7 @@
     </tbody>
 </table>
 
-@section Scripts 
+@section Scripts
 {
     <script>
         $(document).ready(function () {
@@ -51,11 +51,8 @@
                         
                         data: "id",
                         render: function (data, book) {
-                          
                                 return "<button class='btn btn-secondary js-delete' data-books-id=" + data + ">Delete</button>";
                            
-                                
-                            
                         }
                     }
                 ]
@@ -89,6 +86,11 @@
                                 method: "DELETE",
                                 success: function () {
                                     table.row(button.parents("tr")).remove().draw();
+                                },
+                                error: function (request, status, error) {
+                                    bootbox.alert({
+                                    message: "Access denied",
+                                    })
                                 }
                             });
                         }

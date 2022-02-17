@@ -11,6 +11,7 @@ namespace LibApp.Data
         IEnumerable<Book> GetAllBooks();
         Book GetBookById(int id);
         EntityEntry<Book> AddBook(Book book);
+        EntityEntry<Book> RemoveBook(int id);
         int Save();
     }
 }
