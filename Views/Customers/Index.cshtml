@@ -17,7 +17,10 @@
         <tr>
             <th >Customer</th>
             <th>Membership Type</th>
-            <th>Delete</th>
+            @if (User.IsInRole("Owner"))
+                {
+                    <th>Delete</th>
+                }
             </tr>
         </thead>
         <tbody>
@@ -45,12 +48,16 @@
                     {
                         data: "membershipType.name"
                     },
+                    @if (User.IsInRole("Owner"))
+                    {
+                      <text>
                     {
                         data: "id",
                         render: function (data) {
                             return "<button class='btn btn-secondary js-delete' data-customer-id=" + data + ">Delete</button>";
                         }
                     }
+                    </text>    }
                 ]
             });
         });

@@ -19,7 +19,11 @@
     <tr>
         <th>Book</th>
         <th >Genre</th>
-        <th>Delete</th>
+        @if (User.IsInRole("Owner") || User.IsInRole("StoreManager"))
+        {
+            <th>Delete</th>
+        }
+        
 
 
     </tr>
@@ -47,13 +51,19 @@
                     {
                         data: "genre.name"
                     },
+                    @if (User.IsInRole("Owner") || User.IsInRole("StoreManager"))
+                    {
+                        <text>
                     {
                         
                         data: "id",
                         render: function (data, book) {
+                            
                                 return "<button class='btn btn-secondary js-delete' data-books-id=" + data + ">Delete</button>";
-                           
+                                
                         }
+                    }   
+                    </text>    
                     }
                 ]
             });
